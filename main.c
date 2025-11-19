@@ -17,14 +17,14 @@ int rota_mais_rapida(int M, int T[], int visitado[]){
 
 
 //pro tempo minimo tem que usar o dijkstra
-void djikstra(int M, int T[], int mapa[M][M]){
+void djikstra(int M, int origem, int T[], int mapa[M+1][M+1]){
     int visitado[M+1];
 
     for (int i = 0; i < M; i++) {
         T[i] = MAX; // tempo como infinito
         visitado[i] = 0; // nenhum vertice visitado
     }
-    T[0] = 1; //tempo inicial
+    T[origem] = 0; //lugar inicial, a estacao de bombeiros
 
     for (int i = 0; i < M - 1; i++) {
         int u = rota_mais_rapida(M, T, visitado);
@@ -33,9 +33,11 @@ void djikstra(int M, int T[], int mapa[M][M]){
         }
         visitado[u] = 1;
 
-        for (int v = 0; v < M; v++) {
+        for (int v = 1; v < M; v++) {
             if (!visitado[v] && mapa[u][v] < MAX) {
-                T[v] = T[u] + mapa[u][v];
+                if (T[u] + mapa[u][v] < T[v]) {
+                    T[v] = T[u] + mapa[u][v];
+                }
             }
         }
     }
@@ -47,39 +49,37 @@ int main(){
         printf("Erro ao abrir o arquivo!!\n");
         return 1;   
     }
-    int M, N;
+    int incendio, M;
+    fscanf(arq, "%d", &incendio);
     fscanf(arq, "%d", &M);
-    fscanf(arq, "%d", &N);
 
-    int mapa[N+1][N+1];
+    int mapa[M+1][M+1];
 
-    for (int i = 1; i <= N; i++) {
-        for(int j = 1; j <= N; j++){
+    for (int i = 1; i <= M; i++) {
+        for(int j = 1; j <= M; j++){
             mapa[i][j] = MAX;
         }
     }
     
     int a, b, c;
     while(1){
-        if(fscanf(arq, "%d", &a) != 1){
-            break;
-        }
+        fscanf(arq, "%d", &a);
+
         if(a == 0){
             break;
         }
+
         fscanf(arq, "%d %d", &b, &c);
-        mapa[a][b] = c;
+        mapa[a][b] = c; // chama uma vez pq a rua e mao unica
     }
     fclose(arq);
 
-    int T[N+1];
-    djikstra(N, T, mapa);
+    int T[M+1];
+    djikstra(M, 1, T, mapa);
 
-    printf("Tempo minimo para cada vertice a partir do vertice 0:\n");
-    for (int i = 0; i <= N; i++) {
-        printf("Vertice %d: %d\n", i, T[i]);
-    }
+    printf("Rota da esquina #1 ate %d = :\n", incendio);
+    printf("Tempo calculado para rota = %d\n", T[incendio]);
+    
     return 0;
-
-
 }
+
