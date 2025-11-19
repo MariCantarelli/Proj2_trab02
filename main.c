@@ -42,7 +42,7 @@ void djikstra(int M, int T[], int mapa[M][M]){
 }
 
 int main(){
-    FILE *arq = fopen("entrada.txt", "r");
+    FILE *arq = fopen("bombeiro.txt", "r");
     if (arq == NULL) {
         printf("Erro ao abrir o arquivo!!\n");
         return 1;   
