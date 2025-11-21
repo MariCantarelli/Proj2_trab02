@@ -20,7 +20,7 @@ int rota_mais_rapida(int M, int T[], int visitado[]){
 void djikstra(int M, int origem, int T[], int mapa[M+1][M+1], int prev[]){
     int visitado[M+1];
 
-    for (int i = 0; i < M; i++) {
+    for (int i = 1; i <= M; i++) {
         T[i] = MAX; // tempo como infinito
         visitado[i] = 0; // nenhum vertice visitado
         prev[i] = -1; // nenhum vertice veio antes
@@ -91,8 +91,9 @@ int main(){
     djikstra(M, 1, T, mapa, prev); 
     
     // 1 = estacao de bombeiros
-    printf("Rota da esquina #1 ate %d = :\n", incendio);
+    printf("Rota da esquina #1 ate %d = ", incendio);
     rota(incendio, prev);
+    printf("\n");
 
     printf("Tempo calculado para rota = %d\n", T[incendio]);
     
