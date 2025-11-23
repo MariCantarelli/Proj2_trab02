@@ -2,58 +2,11 @@
 #include <stdlib.h>
 #define MAX 99999
 
-int rota_mais_rapida(int M, int T[], int visitado[]){
-    int menor = MAX;
-    int indice = -1;
+int rota_mais_rapida(int M, int T[], int visitado[]);
 
-    for (int i = 1; i <= M; i++) {
-        if (!visitado[i] && T[i] < menor) {
-            menor = T[i];
-            indice = i;
-        }
-    }
-    return indice;
-}
+void djikstra(int M, int origem, int T[], int mapa[M+1][M+1], int prev[]);
 
-
-//pro tempo minimo tem que usar o dijkstra
-void djikstra(int M, int origem, int T[], int mapa[M+1][M+1], int prev[]){
-    int visitado[M+1];
-
-    for (int i = 1; i <= M; i++) {
-        T[i] = MAX; // tempo como infinito
-        visitado[i] = 0; // nenhum vertice visitado
-        prev[i] = -1; // nenhum vertice veio antes
-    }
-    T[origem] = 0; //lugar inicial, a estacao de bombeiros
-
-    for (int i = 1; i <= M ; i++) {
-        int u = rota_mais_rapida(M, T, visitado);
-        if(u == -1){
-            break;
-        }
-        visitado[u] = 1;
-
-        for (int v = 1; v <= M; v++) {
-            if (!visitado[v] && mapa[u][v] < MAX) {
-                if (T[u] + mapa[u][v] < T[v]) {
-                    T[v] = T[u] + mapa[u][v];
-                    prev[v] = u; // atualiza o vertice anterior
-                }
-            }
-        }
-    }
-}
-
-void rota(int v, int prev[]){
-    if (v == -1) return;
-
-    if (prev[v] != -1){
-        rota(prev[v], prev);
-    }
-
-    printf("%d ", v);
-}
+void rota(int v, int prev[]);
 
 int main(){
     FILE *arq = fopen("bombeiro.txt", "r");
@@ -82,7 +35,7 @@ int main(){
         }
 
         fscanf(arq, "%d %d", &b, &c);
-        mapa[a][b] = c; // chama uma vez pq a rua e mao unica
+        mapa[a][b] = c; // chama uma vez porque a rua e mao unica
     }
     fclose(arq);
 
@@ -95,7 +48,61 @@ int main(){
     rota(incendio, prev);
     printf("\n");
 
-    printf("Tempo calculado para rota = %d\n", T[incendio]);
+    printf("Tempo calculado para rota = %d min\n", T[incendio]);
     
     return 0;
+}
+
+int rota_mais_rapida(int M, int T[], int visitado[]){
+    int menor = MAX;
+    int indice = -1;
+
+    for (int i = 1; i <= M; i++) {
+        if (!visitado[i] && T[i] < menor) {
+            menor = T[i];
+            indice = i;
+        }
+    }
+    return indice;
+}
+
+//pro tempo minimo tem que usar o dijkstra
+void djikstra(int M, int origem, int T[], int mapa[M+1][M+1], int prev[]){
+    int visitado[M+1];
+
+    for (int i = 1; i <= M; i++) {
+        T[i] = MAX; // tempo como infinito
+        visitado[i] = 0; // nenhum vertice visitado
+        prev[i] = -1; // nenhum vertice veio antes
+    }
+    T[origem] = 0; //lugar inicial, a estacao de bombeiros
+    // O exemplo do pdf indica que a rota deveria demorar 8 minutos, entretanto após contar os vértices
+    //O tempo certo seria de 7 minutos, dado o T[origem] = 0
+
+    for (int i = 1; i <= M ; i++) {
+        int u = rota_mais_rapida(M, T, visitado);
+        if(u == -1){
+            break;
+        }
+        visitado[u] = 1;
+
+        for (int v = 1; v <= M; v++) {
+            if (!visitado[v] && mapa[u][v] < MAX) {
+                if (T[u] + mapa[u][v] < T[v]) {
+                    T[v] = T[u] + mapa[u][v];
+                    prev[v] = u; // atualiza o vertice anterior
+                }
+            }
+        }
+    }
+}
+
+void rota(int v, int prev[]){
+    if (v == -1) return;
+
+    if (prev[v] != -1){
+        rota(prev[v], prev);
+    }
+
+    printf("%d ", v);
 }
