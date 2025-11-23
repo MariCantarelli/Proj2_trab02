@@ -95,3 +95,5 @@ Tempo calculado para rota = 8
   * `rota_mais_rapida`: Função auxiliar "gulosa" que seleciona o vértice não visitado com menor custo acumulado.
   * `dijkstra`: Implementação do algoritmo principal. Atualiza os custos ($T$) e preenche o vetor de predecessores (`prev`) para rastreamento do caminho.
   * `rota`: Função recursiva que utiliza *backtracking* no vetor `prev` para imprimir o caminho da origem até o destino na ordem correta.
+
+EOF 
