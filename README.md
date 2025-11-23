@@ -7,7 +7,7 @@ Alunos:
 
 Turma: 04G
 
-Link do nosso vídeo no Youtube:
+Link do nosso vídeo no Youtube: https://www.youtube.com/watch?v=1o0d5y_wpFw
 
 O objetivo é auxiliar o departamento de bombeiros da cidade de Nlogônia a encontrar a **rota mais rápida** entre o quartel (localizado na esquina \#1) e o local de um incêndio, considerando um mapa de ruas de mão única com diferentes tempos de deslocamento.
 
