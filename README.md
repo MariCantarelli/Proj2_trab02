@@ -85,10 +85,10 @@ Ao executar com o arquivo acima, o programa exibirá na tela:
 
 ```text
 Rota da esquina #1 ate 3 = 1 4 5 6 2 3 
-Tempo calculado para rota = 7
+Tempo calculado para rota = 8
 ```
 
-> **Nota sobre o exemplo:** O caminho encontrado (1-\>4-\>5-\>6-\>2-\>3) possui custo matemático de 7 minutos (2+1+1+2+1). A implementação prioriza a precisão matemática baseada nos pesos fornecidos no arquivo de entrada.
+> **Nota sobre o exemplo:** O caminho encontrado (1-\>4-\>5-\>6-\>2-\>3) possui custo matemático de 8 minutos. A implementação prioriza a precisão matemática baseada nos pesos fornecidos no arquivo de entrada.
 
 ## Estrutura do Código
 
